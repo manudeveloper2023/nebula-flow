@@ -8,6 +8,7 @@ import { prisma } from "../../../shared/infrastructure/prisma";
 export class UserRepositoryPrisma implements UserRepository {
     async register(user: User): Promise<User> {
         const data = UserMapper.toPersistence(user);
+
         const createdUser = await prisma.user.create({ data });
 
         return UserMapper.toDomain(createdUser);
