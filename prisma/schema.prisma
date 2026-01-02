@@ -26,7 +26,17 @@ model User {
   workspaces Membership[]
   ownedWorkspaces Workspace[] 
 
+  roles Role[]
   @@map("users")
+}
+
+model Role {
+  id String @id @default(cuid())
+  name String @unique
+  description String?
+
+  users User[]
+  @@map("roles")
 }
 
 model Workspace {
@@ -44,7 +54,6 @@ model Workspace {
   ownerId String @map("owner_id")
   
   @@map("workspaces")
-
 }
 
 model Membership {
