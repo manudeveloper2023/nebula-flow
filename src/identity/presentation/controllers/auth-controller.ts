@@ -53,9 +53,16 @@ export class AuthController {
             password,
         });
 
+        res.cookie("access_token", loginResponse.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: 1000 * 60 * 60 * 2, // 2 hours
+        });
+
         res.status(200).json({
             message: "User logged in successfully",
-            ...loginResponse,
+            user: loginResponse.user,
         });
     };
 }
