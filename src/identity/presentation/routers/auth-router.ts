@@ -4,5 +4,6 @@ import { container } from "tsyringe";
 const router = Router();
 const authController = container.resolve(AuthController);
 router.post("/register", authController.register.bind(authController));
+router.post("/login", authController.login.bind(authController));
 
 export { router as authRouter };

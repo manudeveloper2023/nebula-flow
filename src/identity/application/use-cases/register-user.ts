@@ -3,7 +3,7 @@ import type { UserRepository } from "../../domain/repositories/user-repository";
 import type { PasswordHasher } from "../../domain/security/password-hasher";
 import type { RegisterUserCommand } from "../commands/register-user-command";
 import { User } from "../../domain/entities/user";
-import type { RegisterUserResponse } from "../../presentation/responses/register-user-response";
+import type { UserResponse } from "../../presentation/responses/register-user-response";
 import { EmailAlreadyInUseError } from "../../domain/errors/email-already-in-use";
 import { TOKENS } from "../../infrastructure/container/tokens";
 
@@ -18,7 +18,7 @@ export class RegisterUserUseCase {
 
     async execute(
         RegisterUserCommand: RegisterUserCommand
-    ): Promise<RegisterUserResponse> {
+    ): Promise<UserResponse> {
         if (await this.userRepository.findByEmail(RegisterUserCommand.email)) {
             throw new EmailAlreadyInUseError(RegisterUserCommand.email);
         }
