@@ -7,6 +7,12 @@ export class JoseJWTService implements JwtServiceInterface {
         this.secret = new TextEncoder().encode(secretKey);
     }
 
+    async getSubjectFromToken(token: string): Promise<string | null> {
+        const { payload } = await jwtVerify(token, this.secret);
+        if (!payload.sub) return null;
+        return payload.sub;
+    }
+
     async sign(user: User): Promise<string> {
         const alg = "HS256";
 

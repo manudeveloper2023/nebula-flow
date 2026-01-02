@@ -3,13 +3,15 @@ import "reflect-metadata";
 import "./src/identity/infrastructure/container/index.ts";
 import { authRouter } from "./src/identity/presentation/routers/auth-router.ts";
 import { errorHandler } from "./src/identity/presentation/middlewares/error-handler.ts";
+import cookieParser from "cookie-parser";
 
 const app = express();
 export const PORT = process.env.PORT || 3000;
 const apiRouter = Router();
-
 app.use(json());
+app.use(cookieParser());
 app.use("/api", apiRouter);
+
 app.use(errorHandler);
 
 apiRouter.get("/up", (req, res) => {
@@ -17,6 +19,7 @@ apiRouter.get("/up", (req, res) => {
 });
 
 apiRouter.use("/auth", authRouter);
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}/api`);
