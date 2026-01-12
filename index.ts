@@ -15,12 +15,11 @@ app.use("/api", apiRouter);
 app.use(errorHandler);
 
 apiRouter.get("/up", (req, res) => {
-    res.status(200).json({ status: "ok" });
+  res.status(200).json({ status: "ok" });
 });
 
 apiRouter.use("/auth", authRouter);
 
-
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}/api`);
+  console.log(`Server is running on http://localhost:${PORT}/api`);
 });

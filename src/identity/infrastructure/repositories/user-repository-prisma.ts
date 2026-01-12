@@ -5,23 +5,28 @@ import { UserMapper } from "../mappers/user-mapper";
 import { prisma } from "../databases/prisma";
 @injectable()
 export class UserRepositoryPrisma implements UserRepository {
-    async register(user: User): Promise<User> {
-        const data = UserMapper.toPersistence(user);
+  async register(user: User): Promise<User> {
+    const data = UserMapper.toPersistence(user);
 
-        const createdUser = await prisma.user.create({ data });
+    const createdUser = await prisma.user.create({
+      data,
+      include: {
+        roles: true,
+      },
+    });
+    return UserMapper.toDomain(createdUser);
+  }
 
-        return UserMapper.toDomain(createdUser);
+  async findByEmail(email: string): Promise<User | null> {
+    const foundUser = await prisma.user.findUnique({
+      where: { email },
+      include: { roles: true },
+    });
+
+    if (!foundUser) {
+      return null;
     }
 
-    async findByEmail(email: string): Promise<User | null> {
-        const foundUser = await prisma.user.findUnique({
-            where: { email },
-        });
-
-        if (!foundUser) {
-            return null;
-        }
-
-        return UserMapper.toDomain(foundUser);
-    }
+    return UserMapper.toDomain(foundUser);
+  }
 }
