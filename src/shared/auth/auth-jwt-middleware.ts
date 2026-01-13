@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "tsyringe";
-import type { JwtServiceInterface } from "../../domain/security/jwt-service-interface";
-import { TOKENS } from "../../infrastructure/container/tokens";
-import type { UserRepository } from "../../domain/repositories/user-repository";
+import type { JwtServiceInterface } from "../../identity/domain/security/jwt-service-interface";
+import { TOKENS } from "../../identity/infrastructure/container/tokens";
+import type { UserRepository } from "../../identity/domain/repositories/user-repository";
 
 @injectable()
 export class AuthJwtMiddleware {

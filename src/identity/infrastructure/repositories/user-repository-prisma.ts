@@ -2,7 +2,7 @@ import { inject, injectable } from "tsyringe";
 import type { UserRepository } from "../../domain/repositories/user-repository";
 import type { User } from "../../domain/entities/user";
 import { UserMapper } from "../mappers/user-mapper";
-import { prisma } from "../databases/prisma";
+import { prisma } from "../../../shared/databases/prisma";
 @injectable()
 export class UserRepositoryPrisma implements UserRepository {
   async register(user: User): Promise<User> {

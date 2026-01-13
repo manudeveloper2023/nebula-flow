@@ -8,11 +8,19 @@ import type { UserWithRoles } from "../databases/types/user.types";
 
 export class UserMapper {
   static toPersistence(user: User): UserCreateInput {
-    return {
+    const data: UserCreateInput = {
       username: user.Username,
       email: user.Email.value,
       password: user.Password.value,
     };
+
+    if (user.Roles.length > 0) {
+      data.roles = {
+        connect: user.Roles.map((role) => ({ name: role.Name })),
+      };
+    }
+
+    return data;
   }
 
   static toDomain(user: UserWithRoles): User {

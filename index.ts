@@ -1,9 +1,11 @@
 import express, { json, Router } from "express";
 import "reflect-metadata";
 import "./src/identity/infrastructure/container/index.ts";
+import "./src/workspace/infrastructure/container/index.ts";
 import { authRouter } from "./src/identity/presentation/routers/auth-router.ts";
 import { errorHandler } from "./src/identity/presentation/middlewares/error-handler.ts";
 import cookieParser from "cookie-parser";
+import { workspaceRouter } from "./src/workspace/presentation/routes/workspace-router.ts";
 
 const app = express();
 export const PORT = process.env.PORT || 3000;
@@ -19,6 +21,8 @@ apiRouter.get("/up", (req, res) => {
 });
 
 apiRouter.use("/auth", authRouter);
+
+apiRouter.use("/workspace", workspaceRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/api`);
